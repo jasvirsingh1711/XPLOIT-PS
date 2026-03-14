@@ -1,0 +1,21 @@
+﻿# XPECTO.wut - Solution Breakdown
+
+To showcase my understanding of the .wut language, I wrote a program that prints "XPECTO!!!" using a mix of continuous stack arithmetic and a custom loop structure. 
+
+## 1. The Math Chain (Printing "XPECTO")
+Instead of just pushing the raw ASCII values for each letter directly, I wanted to utilize the math operators. My strategy was to start with a seed value and mathematically calculate every subsequent letter using the value left behind by the previous one.
+
+* I started by pushing the seed value 65 (ASCII 'A') onto the stack using ~. 
+* To get 'X', I pushed 23 and added it to the 65, bringing the stack top to 88.
+* For 'P', I needed to drop down to 80. So, I pushed an 8, flipped it to a negative using the # (negate) operator, and added it to the 88. 
+* I kept this chain reaction going: pushing 11 and negating it got me down to 69 ('E'). Then I simply used the decrement operator @ twice to drop to 67 ('C').
+* Finally, adding 17 bumped it up to 84 ('T'), and negating a 5 dropped it perfectly to 79 ('O').
+
+## 2. The Swap Loop (Printing "!!!")
+The trickiest limitation of the .wut language is the lack of a standard "POP" command to destroy old stack values. This makes looping difficult, because the character you just printed gets stuck on top of your loop counter. To bypass this, I used the swap command ($).
+
+* I initialized the loop by pushing a 3 onto the stack as my counter, and marked the start of the loop with &.
+* Inside the loop, I push 33 (the ASCII value for '!') and print it with ^.
+* At this point, the '!' is blocking the loop counter. So, I use $ to swap the top two stack values. This buries the '!' and brings my counter back up to the top.
+* I use @ to subtract 1 from the counter, and finally hit *. Since the counter isn't 0 yet, the * command jumps execution right back to the & symbol.
+* After three cycles, the counter hits 0, the loop breaks, and the program ends successfully!
