@@ -1,0 +1,178 @@
+jasvir11@Jasvir-PC:~$ cd /mnt/d/xploit
+
+file ./chal_final > /tmp/screenshots.txt
+strings ./chal_final | grep -i "vault\|auth\|unlock\|CLEAR" >> /tmp/screenshots.txt
+objdump -d ./chal_final | grep "<.*>:" >> /tmp/screenshots.txt
+objdump -d ./chal_final | grep -A 30 "user_authentication_module>:" >> /tmp/screenshots.txt
+objdump -d ./chal_final | grep -A 50 "unlock_vault_sequence>:" >> /tmp/screenshots.txt
+hexdump -C ./chal -s 0x1950 -N 16 >> /tmp/screenshots.txt
+hexdump -C ./chal_final -s 0x1950 -N 16 >> /tmp/screenshots.txt
+hexdump -C ./chal_final -s 0x1b7f -N 16 >> /tmp/screenshots.txt
+hexdump -C ./chal_final -s 0x1a8c -N 16 >> /tmp/screenshots.txt
+printf 'testinput\n42\n' | ./chal_final >> /tmp/screenshots.txt
+
+cat /tmp/screenshots.txt
+hexdump: invalid option -- 'N'
+Try 'hexdump --help' for more information.
+hexdump: invalid option -- 'N'
+Try 'hexdump --help' for more information.
+hexdump: invalid option -- 'N'
+Try 'hexdump --help' for more information.
+hexdump: invalid option -- 'N'
+Try 'hexdump --help' for more information.
+./chal_final: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=57f99b9ae8cee316c0fc6f515f2096165b3b81c5, for GNU/Linux 3.2.0, not stripped
+Legacy Admin Unlocked. Password: FAKE_PASSWORD_123
+Backup vault empty. System compromised.
+XPLOIT_VAULT_SYSTEM_V2
+.vault_state
+[ERROR] Cannot write vault state. Check permissions.
+[VAULT] Cold start detected. Vault state file initialised.
+[VAULT] Authentication suspended. Re-run system to resume.
+[+] AUTHORIZATION ACCEPTED: Level 999 Admin.
+[-] AUTHORIZATION: Level 0 Guest.
+Vault Unlock Code:
+  VAULT SYSTEM CLEARED.
+  All authentication layers bypassed successfully.
+[-] Vault unlock failed. Access denied.
+Initializing XPLOIT Vault System...
+g_vault_byte
+unlock_vault_sequence
+check_vault_state
+legacy_auth_v1
+user_authentication_module
+unlock_backup_vault
+0000000000001000 <_init>:
+0000000000001020 <.plt>:
+0000000000001150 <__cxa_finalize@plt>:
+0000000000001160 <puts@plt>:
+0000000000001170 <fread@plt>:
+0000000000001180 <getpid@plt>:
+0000000000001190 <fclose@plt>:
+00000000000011a0 <strlen@plt>:
+00000000000011b0 <__stack_chk_fail@plt>:
+00000000000011c0 <printf@plt>:
+00000000000011d0 <memset@plt>:
+00000000000011e0 <srand@plt>:
+00000000000011f0 <fgets@plt>:
+0000000000001200 <strcmp@plt>:
+0000000000001210 <strtol@plt>:
+0000000000001220 <time@plt>:
+0000000000001230 <ptrace@plt>:
+0000000000001240 <fopen@plt>:
+0000000000001250 <exit@plt>:
+0000000000001260 <fwrite@plt>:
+0000000000001270 <rand@plt>:
+0000000000001280 <_start>:
+00000000000012b0 <deregister_tm_clones>:
+00000000000012e0 <register_tm_clones>:
+0000000000001320 <__do_global_dtors_aux>:
+0000000000001360 <frame_dummy>:
+0000000000001369 <legacy_auth_v1>:
+00000000000013a3 <unlock_backup_vault>:
+00000000000013e9 <initialize_telemetry>:
+000000000000146a <verify_network_cert>:
+00000000000014ca <init_secure_channel>:
+0000000000001536 <destroy_secure_channel>:
+0000000000001564 <scan_memory_integrity>:
+000000000000160c <load_crypto_module>:
+000000000000166e <compute_session_hash>:
+00000000000016c2 <omega_protocol_legacy>:
+0000000000001752 <emit_system_diagnostics>:
+000000000000178b <check_vault_state>:
+00000000000018ef <security_watchdog>:
+0000000000001936 <user_authentication_module>:
+00000000000019f2 <unlock_vault_sequence>:
+0000000000001b0e <main>:
+0000000000001b9c <_fini>:
+0000000000001936 <user_authentication_module>:
+    1936:       f3 0f 1e fa             endbr64
+    193a:       55                      push   %rbp
+    193b:       48 89 e5                mov    %rsp,%rbp
+    193e:       48 83 ec 60             sub    $0x60,%rsp
+    1942:       64 48 8b 04 25 28 00    mov    %fs:0x28,%rax
+    1949:       00 00
+    194b:       48 89 45 f8             mov    %rax,-0x8(%rbp)
+    194f:       31 c0                   xor    %eax,%eax
+    1951:       c7 45 ac 01 00 00 00    movl   $0x1,-0x54(%rbp)
+    1958:       48 8d 05 de 08 00 00    lea    0x8de(%rip),%rax        # 223d <_IO_stdin_used+0x23d>
+    195f:       48 89 c7                mov    %rax,%rdi
+    1962:       b8 00 00 00 00          mov    $0x0,%eax
+    1967:       e8 54 f8 ff ff          call   11c0 <printf@plt>
+    196c:       48 8b 15 9d 26 00 00    mov    0x269d(%rip),%rdx        # 4010 <stdin@GLIBC_2.2.5>
+    1973:       48 8d 45 b0             lea    -0x50(%rbp),%rax
+    1977:       be 40 00 00 00          mov    $0x40,%esi
+    197c:       48 89 c7                mov    %rax,%rdi
+    197f:       e8 6c f8 ff ff          call   11f0 <fgets@plt>
+    1984:       48 85 c0                test   %rax,%rax
+    1987:       74 52                   je     19db <user_authentication_module+0xa5>
+    1989:       8b 45 ac                mov    -0x54(%rbp),%eax
+    198c:       3d e7 03 00 00          cmp    $0x3e7,%eax
+    1991:       75 20                   jne    19b3 <user_authentication_module+0x7d>
+    1993:       48 8d 05 be 08 00 00    lea    0x8be(%rip),%rax        # 2258 <_IO_stdin_used+0x258>
+    199a:       48 89 c7                mov    %rax,%rdi
+    199d:       e8 be f7 ff ff          call   1160 <puts@plt>
+    19a2:       48 8d 05 df 08 00 00    lea    0x8df(%rip),%rax        # 2288 <_IO_stdin_used+0x288>
+    19a9:       48 89 c7                mov    %rax,%rdi
+    19ac:       e8 af f7 ff ff          call   1160 <puts@plt>
+    19b1:       eb 29                   jmp    19dc <user_authentication_module+0xa6>
+00000000000019f2 <unlock_vault_sequence>:
+    19f2:       f3 0f 1e fa             endbr64
+    19f6:       55                      push   %rbp
+    19f7:       48 89 e5                mov    %rsp,%rbp
+    19fa:       53                      push   %rbx
+    19fb:       48 83 ec 38             sub    $0x38,%rsp
+    19ff:       64 48 8b 04 25 28 00    mov    %fs:0x28,%rax
+    1a06:       00 00
+    1a08:       48 89 45 e8             mov    %rax,-0x18(%rbp)
+    1a0c:       31 c0                   xor    %eax,%eax
+    1a0e:       0f b6 15 13 26 00 00    movzbl 0x2613(%rip),%edx        # 4028 <g_pid_seed>
+    1a15:       0f b6 05 0d 26 00 00    movzbl 0x260d(%rip),%eax        # 4029 <g_vault_byte>
+    1a1c:       89 d3                   mov    %edx,%ebx
+    1a1e:       31 c3                   xor    %eax,%ebx
+    1a20:       48 8b 05 f9 25 00 00    mov    0x25f9(%rip),%rax        # 4020 <g_argv0>
+    1a27:       48 89 c7                mov    %rax,%rdi
+    1a2a:       e8 71 f7 ff ff          call   11a0 <strlen@plt>
+    1a2f:       31 d8                   xor    %ebx,%eax
+    1a31:       88 45 ce                mov    %al,-0x32(%rbp)
+    1a34:       48 8d 05 ca 08 00 00    lea    0x8ca(%rip),%rax        # 2305 <_IO_stdin_used+0x305>
+    1a3b:       48 89 c7                mov    %rax,%rdi
+    1a3e:       b8 00 00 00 00          mov    $0x0,%eax
+    1a43:       e8 78 f7 ff ff          call   11c0 <printf@plt>
+    1a48:       48 8b 15 c1 25 00 00    mov    0x25c1(%rip),%rdx        # 4010 <stdin@GLIBC_2.2.5>
+    1a4f:       48 8d 45 d0             lea    -0x30(%rbp),%rax
+    1a53:       be 10 00 00 00          mov    $0x10,%esi
+    1a58:       48 89 c7                mov    %rax,%rdi
+    1a5b:       e8 90 f7 ff ff          call   11f0 <fgets@plt>
+    1a60:       48 85 c0                test   %rax,%rax
+    1a63:       75 0a                   jne    1a6f <unlock_vault_sequence+0x7d>
+    1a65:       bf 01 00 00 00          mov    $0x1,%edi
+    1a6a:       e8 e1 f7 ff ff          call   1250 <exit@plt>
+    1a6f:       48 8d 45 d0             lea    -0x30(%rbp),%rax
+    1a73:       ba 10 00 00 00          mov    $0x10,%edx
+    1a78:       be 00 00 00 00          mov    $0x0,%esi
+    1a7d:       48 89 c7                mov    %rax,%rdi
+    1a80:       e8 8b f7 ff ff          call   1210 <strtol@plt>
+    1a85:       88 45 cf                mov    %al,-0x31(%rbp)
+    1a88:       0f b6 45 cf             movzbl -0x31(%rbp),%eax
+    1a8c:       3a 45 ce                cmp    -0x32(%rbp),%al
+    1a8f:       90                      nop
+    1a90:       90                      nop
+    1a91:       48 8d 05 88 08 00 00    lea    0x888(%rip),%rax        # 2320 <_IO_stdin_used+0x320>
+    1a98:       48 89 c7                mov    %rax,%rdi
+    1a9b:       e8 c0 f6 ff ff          call   1160 <puts@plt>
+    1aa0:       48 8d 05 ae 08 00 00    lea    0x8ae(%rip),%rax        # 2355 <_IO_stdin_used+0x355>
+    1aa7:       48 89 c7                mov    %rax,%rdi
+    1aaa:       e8 b1 f6 ff ff          call   1160 <puts@plt>
+    1aaf:       48 8d 05 ba 08 00 00    lea    0x8ba(%rip),%rax        # 2370 <_IO_stdin_used+0x370>
+    1ab6:       48 89 c7                mov    %rax,%rdi
+    1ab9:       e8 a2 f6 ff ff          call   1160 <puts@plt>
+Initializing XPLOIT Vault System...
+[SYS] kernel handshake initialised.
+
+Vault Unlock Code:
+***************************************************
+  VAULT SYSTEM CLEARED.
+  All authentication layers bypassed successfully.
+  Document your methodology and proceed to
+  the next question.
+***************************************************
